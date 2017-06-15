@@ -1,0 +1,22 @@
+{
+  "name": "stackoverflow-question-44534326",
+  "version": "0.0.0",
+  "authors": [
+    "Frank R. <renfeng.cn@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^2.0.0",
+    "iron-ajax": "PolymerElements/iron-ajax#^2.0.0",
+    "iron-localstorage": "PolymerElements/iron-localstorage#^2.0.0",
+    "paper-button": "PolymerElements/paper-button#^2.0.0"
+  }
+}

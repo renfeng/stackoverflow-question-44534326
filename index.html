@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+	<script src="components/webcomponentsjs/webcomponents-loader.js"></script>
+	<link rel="import" href="components/iron-ajax/iron-ajax.html">
+	<link rel="import" href="components/iron-localstorage/iron-localstorage.html">
+	<link rel="import" href="components/paper-button/paper-button.html">
+</head>
+<body>
+<dom-module id="shop-cart">
+	<template>
+		<iron-ajax url="list.json" last-response="{{ListProducts}}" auto>
+		</iron-ajax>
+
+		<template is="dom-repeat" items="{{ListProducts}}">
+			<p style="display:block;width:400px">
+				<span>{{item.code}}</span>
+				<span>{{item.title}}</span>
+				<paper-button raised class="indigo" on-click="addProduct">Add</paper-button>
+				<br/>
+			</p>
+
+		</template>
+
+		<iron-localstorage name="my-app-storage"
+						   value="{{Orders}}"
+						   on-iron-localstorage-load-empty="initializeDefaultOrders"
+		></iron-localstorage>
+
+		<template is="dom-repeat" items="Orders" as="order">
+			<div>
+				<p>{{order.code}}</p>
+				<p>{{order.title}}</p>
+			</div>
+		</template>
+
+
+	</template>
+
+	<script>
+		class ShopCart extends Polymer.Element {
+			static get is() {
+				return 'shop-cart';
+			}
+			static get properties() {
+				return {
+					Product: {
+						type: String
+							 },
+
+					Orders: {
+							type: Array,
+							value() {
+								return [
+									{
+									code:'',
+									title:'',
+									}
+								];
+							},
+							},
+					ListProducts: {
+							type: Array,
+							value() {
+								return [];
+							},
+					   }
+
+				}
+			}
+
+
+			initializeDefaultOrders() {
+				  this.Orders = {
+					code:'',
+					title:''
+				  }
+			   };
+
+			addProduct(e) {
+				  this.Product= e.model.item.title;
+				  this.push('Orders',this.Product);
+				  this.set('Product','');
+
+
+			}
+
+			deleteProduct(e) {
+				this.splice('Orders', e.model.index, 1);
+			}
+
+		}
+
+
+		window.customElements.define(ShopCart.is, ShopCart);
+	</script>
+</dom-module>
+<shop-cart></shop-cart>
+</body>
+</html>
